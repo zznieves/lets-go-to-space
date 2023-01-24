@@ -5,7 +5,9 @@ let inputBox = document.querySelector('input');
 
 // API information
 let url = 'https://api.nasa.gov/planetary/apod?api_key=';
-const apiKey = process.env.APIKEY;
+const apiKey = config.APIKEY;
+
+console.log(apiKey);
 
 
 // display data response from API to user
