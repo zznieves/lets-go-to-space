@@ -3,7 +3,7 @@
 let submitBtn = document.querySelector('button');
 let inputBox = document.querySelector('input');
 
-// API information
+// endpoint + API information
 let url = 'https://api.nasa.gov/planetary/apod?api_key=';
 const apiKey = config.APIKEY;
 
@@ -13,13 +13,18 @@ console.log(apiKey);
 // display data response from API to user
 function displayData(data) {
 
+    // set photo and description + dimensions
     let picture = document.querySelector('img');
     let description = document.querySelector('p');
 
     // show image and description from returned data
+    document.getElementById('picTitle').innerText = data.title;
     picture.src = data.url;
-    description.innerText = data.explanation;
+    picture.width = '500';
+    picture.height = '500';
 
+    description.innerText = data.explanation;
+    
 
 }
 
@@ -27,9 +32,12 @@ function displayData(data) {
 // eventHandler for click events on Submit button
 async function logInput() {
 
+    // date input element
+    const input = document.querySelector('input');
+
     try {
         // send request to API for data
-        const response = await fetch(url + apiKey);
+        const response = await fetch(url + apiKey + `&date=${input.value}`);
 
         if(response.ok) {
 
@@ -38,7 +46,9 @@ async function logInput() {
             // display data to user
             displayData(jsonResponse);
         }
-        throw new Error('Request failed!');
+        else {
+            throw new Error('Request failed!');
+        }
     }
     catch (error) {
         console.log(error);
